@@ -71,8 +71,13 @@ az vm create --name myFreeBSD11 \
 
 Then you can sign in to your FreeBSD VM through the ip address that printed in the output of above deployment. 
 
+RSA 
 ```bash
 ssh azureuser@xx.xx.xx.xx -i /etc/ssh/ssh_host_rsa_key
+```
+ED25519
+```bash
+ssh azureuser@xx.xx.xx.xx -i /etc/ssh/ ssh_host_ed25519_key 
 ```   
 
 ## VM extensions for FreeBSD
@@ -106,7 +111,7 @@ The [CustomScript](https://github.com/Azure/azure-linux-extensions/tree/master/C
 ## Authentication: user names, passwords, and SSH keys
 When you're creating a FreeBSD virtual machine by using the Azure portal, you must provide a user name, password, or SSH public key.
 User names for deploying a FreeBSD virtual machine on Azure must not match names of system accounts (UID <100) already present in the virtual machine ("root", for example).
-Currently, only the RSA SSH key is supported. A multiline SSH key must begin with `---- BEGIN SSH2 PUBLIC KEY ----` and end with `---- END SSH2 PUBLIC KEY ----`.
+A multiline SSH key must begin with `---- BEGIN SSH2 PUBLIC KEY ----` and end with `---- END SSH2 PUBLIC KEY ----`.
 
 ## Obtaining superuser privileges
 The user account that is specified during virtual machine instance deployment on Azure is a privileged account. The package of sudo was installed in the published FreeBSD image.
