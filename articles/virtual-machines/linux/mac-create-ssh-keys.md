@@ -32,10 +32,15 @@ For additional ways to generate and use SSH keys on a Windows computer, see [How
 
 Use the `ssh-keygen` command to generate SSH public and private key files. By default, these files are created in the ~/.ssh directory. You can specify a different location, and an optional password (*passphrase*) to access the private key file. If an SSH key pair with the same name exists in the given location, those files are overwritten.
 
-The following command creates an SSH key pair using RSA encryption and a bit length of 4096:
+The following commands create an SSH key pair using RSA or ed25519 encryption and a bit length of 4096:
 
+RSA
 ```bash
 ssh-keygen -m PEM -t rsa -b 4096
+```
+ED25519
+```bash
+ssh-keygen -m PEM -t ed25519 -b 4096
 ```
 
 > [!NOTE]
@@ -57,19 +62,30 @@ To create a Linux VM that uses SSH keys for authentication, specify your SSH pub
 
 If you're not familiar with the format of an SSH public key, you can display your public key with the following `cat` command, replacing `~/.ssh/id_rsa.pub` with the path and filename of your own public key file if needed:
 
+RSA
 ```bash
 cat ~/.ssh/id_rsa.pub
 ```
 
-A typical public key value looks like this example:
+A typical RSA public key value looks like this:
 
 ```output
 ssh-rsa AAAAB3NzaC1yc2EAABADAQABAAACAQC1/KanayNr+Q7ogR5mKnGpKWRBQU7F3Jjhn7utdf7Z2iUFykaYx+MInSnT3XdnBRS8KhC0IP8ptbngIaNOWd6zM8hB6UrcRTlTpwk/SuGMw1Vb40xlEFphBkVEUgBolOoANIEXriAMvlDMZsgvnMFiQ12tD/u14cxy1WNEMAftey/vX3Fgp2vEq4zHXEliY/sFZLJUJzcRUI0MOfHXAuCjg/qyqqbIuTDFyfg8k0JTtyGFEMQhbXKcuP2yGx1uw0ice62LRzr8w0mszftXyMik1PnshRXbmE2xgINYg5xo/ra3mq2imwtOKJpfdtFoMiKhJmSNHBSkK7vFTeYgg0v2cQ2+vL38lcIFX4Oh+QCzvNF/AXoDVlQtVtSqfQxRVG79Zqio5p12gHFktlfV7reCBvVIhyxc2LlYUkrq4DHzkxNY5c9OGSHXSle9YsO3F1J5ip18f6gPq4xFmo6dVoJodZm9N0YMKCkZ4k1qJDESsJBk2ujDPmQQeMjJX3FnDXYYB182ZCGQzXfzlPDC29cWVgDZEXNHuYrOLmJTmYtLZ4WkdUhLLlt5XsdoKWqlWpbegyYtGZgeZNRtOOdN6ybOPJqmYFd2qRtb4sYPniGJDOGhx4VodXAjT09omhQJpE6wlZbRWDvKC55R2d/CSPHJscEiuudb+1SG2uA/oik/WQ== username@domainname
 ```
+ED25519
+```bash
+cat ~/.ssh/id_ed25519.pub
+```
+
+A typical ED25519 public key value looks like this:
+
+```output
+ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIGBAb01aw1igUz4mYpgpIBzNpqfx01d2Wfoiw/qD/4Nf username@domain
+```
 
 If you copy and paste the contents of the public key file to use in the Azure portal or a Resource Manager template, make sure you don't copy any trailing whitespace. To copy a public key in macOS, you can pipe the public key file to `pbcopy`. Similarly in Linux, you can pipe the public key file to programs such as `xclip`.
 
-The public key that you place on your Linux VM in Azure is by default stored in ~/.ssh/id_rsa.pub, unless you specified a different location when you created the key pair. To use the [Azure CLI 2.0](/cli/azure) to create your VM with an existing public key, specify the value and optionally the location of this public key using the [az vm create](/cli/azure/vm#az-vm-create) command with the `--ssh-key-values` option. In the following command, replace *myVM*, *myResourceGroup*, *UbuntuLTS*, *azureuser*, and *mysshkey.pub* with your own values:
+The public keys that you place on your Linux VM in Azure are, by default, stored in ~/.ssh/ (id_rsa.pub or id_ed25519.pub) unless you specified a different location when you created the key pair. To use the [Azure CLI 2.0](/cli/azure) to create your VM with an existing public key, specify the value and optionally the location of this public key using the [az vm create](/cli/azure/vm#az-vm-create) command with the `--ssh-key-values` option. In the following command, replace *myVM*, *myResourceGroup*, *UbuntuLTS*, *azureuser*, and *mysshkey.pub* with your own values:
 
 ```azurecli-interactive
 az vm create \
