@@ -30,7 +30,7 @@ Azure Resource Manager templates are JSON files that define the infrastructure a
 > The provided template creates an [Azure Generation 2 VM](../generation-2.md) by default.
 
 >[!NOTE]
-> Only SSH authentication is enabled by default when using the quickstart template. When prompted, provide the value of your own SSH public key, such as the contents of *~/.ssh/id_rsa.pub*.
+> Only SSH authentication is enabled by default when using the quickstart template. When prompted, provide the value of your own SSH public key, such as the contents of *~/.ssh/id_rsa.pub* or *~/.ssh/id_ed25519.pub*
 >
 > If you don't have an SSH key pair, [create and use an SSH key pair for Linux VMs in Azure](mac-create-ssh-keys.md). 
 
