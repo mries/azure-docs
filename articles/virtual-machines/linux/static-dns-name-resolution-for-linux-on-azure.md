@@ -42,7 +42,9 @@ az network nic create \
 ### Deploy a VM and connect the vNic
 Create a VM with [az vm create](/cli/azure/vm). The `--nics` flag connects the vNic to the VM during the deployment to Azure. The following example creates a VM named `myVM` with Azure Managed Disks and attaches the vNic named `myNic` from the preceding step:
 
-```azurecli
+azurecli: <br>
+RSA Key
+```
 az vm create \
     --resource-group myResourceGroup \
     --name myVM \
@@ -50,6 +52,17 @@ az vm create \
     --image Ubuntu2204 \
     --admin-username azureuser \
     --ssh-key-value ~/.ssh/id_rsa.pub
+```
+
+ED25519 Key
+```
+az vm create \
+    --resource-group myResourceGroup \
+    --name myVM \
+    --nics myNic \
+    --image Ubuntu2204 \
+    --admin-username azureuser \
+    --ssh-key-value ~/.ssh/id_ed25519.pub
 ```
 
 ## Detailed walkthrough
@@ -142,7 +155,20 @@ We now have a virtual network and subnet, a Network Security Group acting as a f
 
 Create a VM with [az vm create](/cli/azure/vm). The following example creates a VM named `myVM` with Azure Managed Disks and attaches the vNic named `myNic` from the preceding step:
 
-```azurecli
+azurecli:
+RSA Key
+```
+az vm create \
+    --resource-group myResourceGroup \
+    --name myVM \
+    --nics myNic \
+    --image Ubuntu2204 \
+    --admin-username azureuser \
+    --ssh-key-value ~/.ssh/id_rsa.pub
+```
+
+ED25519 Key
+```
 az vm create \
     --resource-group myResourceGroup \
     --name myVM \
